@@ -77,42 +77,49 @@
   found even in reputable researchers' papers. Simple is good.
 \end{abstract}
 
-\section{Usually It Is a Good Idea to Introduce the Topic}
+\section{Basic Description of Ring LWE}
+\section{Attacks}
 
-\lipsum[2-3]
+\section{Description of Parameter Choices}
+Most asymmetric lattice-based encryption schemas use a 
+similar structure and are based on Ring-LWE (RLWE) and Learning with Errors (LWE). 
+The security of these schemes relies on the hardness of 
+the mathematical problems, such as the Shortest Vector Problem (SVP)
+ and the Closest Vector Problem (CVP), 
+ which are believed to be difficult to solve even with quantum computers.
+ However, those problems do not give hints on how to choose the 
+ parameters of the encryption scheme,
+ Choosing the right parameters may be deciding factor between
+ proposals chosen for the NIST post-quantum cryptography standardization process.
+ In this section, we will discuss the chosen parameters for LAC and the rationale behind them.
 
-\subsection{You Choose}
+Choosing the right modulus is important as it determines 
+the size of the payload. A smaller modulus leads to smaller keys and ciphertexts, 
+which is desirable for efficiency. 
+This comes at the cost of increased probability of decryption errors, 
+as the noise in the ciphertext may exceed the modulus during decryption.
+However, a larger modulus has the advantage of allowing for more noise tolerance, which 
+decreases the probability of decryption errors.
 
-\lipsum[2-3]
+Unlike earlier schemes that used relatively large modulo such as q=12289.
+LAC tries to use byte level modulus, which allows for more efficient implementations.
+The authors argue that using modulos smaller than byte level 
+does not make sense from a performance perspective, as bytes are the smallest
+addressable units in most computer architectures.
 
-\subsection{Your Own Sections and Subsections, But}
+The papers considers three types of byte-level modulus: 
+power-of-two modulus (q=256), max-split modulus (q=257), and min-split modulus (q=251).
+For this to work we can observe that our noise is small enough to be tolerated by the byte level modulus.
 
-\lipsum[2-4]
+\begin{itemize}
+  \item Power-of-two modulus (q=256): This choice allows for efficient implementation, as the modulus operation can be performed by simple bitwise operation.
+  \item Max-split modulus (q=257): This choice allows for maximum factorization of the polynomial xn + 1
+  \item Min-split modulus (q=251): This choice allows for minimum factorization of the polynomial xn + 1
+\end{itemize}
 
-\subsubsection{Numbered Subsubsections are Possible, and Often a Bad Idea}
-
-\lipsum[2-4]
-
-\subsubsection*{Unnumbered Subsubsections are Often a Better Choice}
-
-\lipsum[2-3]
-
-\paragraph{A paragraph is also possible.}
-
-\lipsum[3-4]
-
-\section{But, You Already Know How to Organize}
-
-\lipsum[2-3]
-
-\section{A Written Report}
-
-\lipsum[2-4]
+The authors chose the min-split modulus (q=251) for the main version of their scheme submitted to NIST-PQC, as they argue that less algebraic structure reduces the attack surface.
 
 \section{A Conclusion Is a Nice Ending}
-
-\lipsum[2-3]
-
 \appendix
 
 \section{It Feels Short! What Should We Do?}
