@@ -78,6 +78,18 @@
 \end{abstract}
 
 \section{Basic Description of Ring LWE}
+LAC is, as many post quantum, algorithms based on Ring Learning With Errors [Citation Needed]
+Ring Learning with errors itself is an evolution from Learning with Errors [Cite REGEV].
+
+Learning with Errors is based on the following simple principle for Key generation:
+We work in integers modulo q. We have a Matrix A and a secret vector s plus a small random vector e
+We calculate b = As + e . The public key then is (A,b) and the private key is (A,s) the random error e is discarded but because of it the private key cannot be easily reconstructed from the public key. The Matrix A can be seen as a Basis of a Lattice and then it becomes clear that finding s from b is the Closest Vector problem.
+
+Furthermore it was possible to show that for certain kinds of Lattices the existence of a Algorithm that solves b=As +e in the average case would imply an algorithm that Solves the Shortest Vector problem in the worst case, which would imply P=NP.
+
+Therefore LWE Encryption Schemes are considered quite secure. The main problem with them is that the matrix A has to be quite large to provide sufficient security, this creates performance problems and is why Ring encryption was developed. In Ring LWE Encryption instead of working within $ZZ_q$ it is worked in the ring $ZZ_qq/x^n+1$ then it is possible 
+
+
 \section{Attacks}
 
 \section{Description of Parameter Choices}
