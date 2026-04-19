@@ -90,7 +90,6 @@ Furthermore it was possible to show that for certain kinds of Lattices the exist
 Therefore LWE Encryption Schemes are considered quite secure. The main problem with them is that the matrix A has to be quite large to provide sufficient security, this creates performance problems and is why Ring encryption was developed. In Ring LWE Encryption instead of working within $ZZ_q$ it is worked in the ring $ZZ_qq/x^n+1$ then it is possible 
 
 
-\section{Attacks}
 
 \section{Description of Parameter Choices}
 Most asymmetric lattice-based encryption schemas use a 
@@ -131,7 +130,47 @@ For this to work we can observe that our noise is small enough to be tolerated b
 
 The authors chose the min-split modulus (q=251) for the main version of their scheme submitted to NIST-PQC, as they argue that less algebraic structure reduces the attack surface.
 
+\section{Attacks}
+There has been a number of attacks on LAC.
+We will now look at three attacks.
+
+CCA Attack \cite{10.1007/978-3-030-34578-5_4}: LAC allows for a small 
+chance of decryption failure, 
+which is a common feature in 
+lattice-based encryption schemes.
+If the noise is too large, decryption may fail,
+and the decryption algorithm will output 
+an error instead of the plaintext.
+Attackers can exploit this decryption failure
+to gain information about the secret key.
+By crafting specific ciphertexts that
+allow them to observe whether decryption fails or not,
+attackers can infer information about the secret key.
+
+
+D'Anvers et al. showed that LAC is vulnerable to a timing side-channel 
+attack stemming from its BCH error-correction 
+decoding step. Because the decoder runs
+in variable time depending on whether errors 
+are present, an attacker can distinguish 
+ciphertexts that induce decoding errors
+from those that do not. 
+Using carefully crafted chosen
+ciphertexts and timing measurements,
+the attacker can infer coefficients
+of the secret key and eventually recover 
+the full secret key,
+thereby breaking the intended
+IND-CCA security of the scheme.
+The authors demonstrated full key
+recovery for all LAC parameter sets 
+in under two minutes using fewer than 
+$2^10$ decryption queries.
+
+A third attack is the misuse of protocol.
+
 \section{A Conclusion Is a Nice Ending}
+
 \appendix
 
 \section{It Feels Short! What Should We Do?}
